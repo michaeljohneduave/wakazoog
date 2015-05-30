@@ -5,10 +5,14 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 accounts-base
 accounts-password
 twbs:bootstrap
 ian:accounts-ui-bootstrap-3
 http
+reactive-var
+jparker:crypto-base64
+momentjs:moment
+dangrossman:bootstrap-daterangepicker
+mrt:moment-timezone

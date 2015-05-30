@@ -1,0 +1,14 @@
+.box {
+	background-color: limegreen;
+	height: 100px;
+	cursor: pointer;
+}
+
+.date-range {
+	font-size: 25px;
+}
+
+.date-range a {
+	border-bottom: 1px #36558b dashed;
+	text-decoration: none;
+}

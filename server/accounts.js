@@ -1,5 +1,5 @@
 Accounts.onCreateUser(function (options, user) {
-	if (Meteor.users.find().count() < 2) {
+	if (Meteor.users.find().count() < 1) {
 		user.isAdmin = true;
 	} else { 
 		user.isAdmin = false;
@@ -9,6 +9,5 @@ Accounts.onCreateUser(function (options, user) {
 });
 
 Accounts.config({
-	sendVerificationEmail: true,
 	restrictCreationByEmailDomain: 'zoogtech.com'
 })

@@ -1,3 +1,23 @@
 <template name="homepage">
-	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="date-range">
+					Stats for <a href="#" id="daterange">{{DateRange}}</a>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-top:20px;">
+			{{#each WakaUsers}}
+			<div class="col-md-2">
+				<div class="box">
+					Name: {{owner}} <br>
+					{{#with GetWakaTime owner}}
+					Wakatime: {{data.grand_total.text}}
+					{{/with}}
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
 </template>
