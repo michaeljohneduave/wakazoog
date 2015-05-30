@@ -25,8 +25,8 @@ function fetchTodaysReport() {
 			{ 
 				headers: { "Authorization": 'Basic ' + e.key_base62 },
 				params: { 
-					start: moment().format("YYYY-MM-DD"),
-					end: moment().format("YYYY-MM-DD"),
+					start: moment.tz("Asia/Manila").format("YYYY-MM-DD"),
+					end: moment.tz("Asia/Manila").format("YYYY-MM-DD"),
 				}
 			},
 			function (err, res) {
@@ -43,7 +43,7 @@ function fetchTodaysReport() {
 function fetchDailyReport() {
 	Keys.find().fetch().forEach(function (e) {
 		if (!e.key) return;
-		var yest = moment().subtract(1, 'days').format("YYYY-MM-DD");
+		var yest = moment.tz("Asia/Manila").subtract(1, 'days').format("YYYY-MM-DD");
 		HTTP.call('GET', 'https://wakatime.com/api/v1/users/current/summaries',
 			{ 
 				headers: { "Authorization": 'Basic ' + e.key_base62 },

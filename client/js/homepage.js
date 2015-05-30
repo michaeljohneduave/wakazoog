@@ -65,7 +65,7 @@ Template.homepage.helpers({
 		data = {
 			grand_total: {}
 		};
-		if (!daily.length) return;
+		if (!daily.length) return { data: { grand_total: {	text: "NO DATA :*(" } } };
 
 		_.each(daily, function (elem) {
 			totalsecs += elem.data.grand_total.total_seconds;
