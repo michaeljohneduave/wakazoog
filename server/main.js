@@ -4,7 +4,7 @@ Meteor.startup(function () {
 
 	Meteor.setInterval(function () {
 		fetchTodaysReport();
-	}, 10000);
+	}, 1000 * 60 * 15);
 
 	Meteor.setInterval(function () {
 		var now = new Date();
