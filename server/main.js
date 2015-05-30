@@ -4,7 +4,7 @@ Meteor.startup(function () {
 
 	Meteor.setInterval(function () {
 		fetchTodaysReport();
-	}, 1000 * 60 * 15);
+	}, 10000);
 
 	Meteor.setInterval(function () {
 		var now = new Date();
@@ -17,6 +17,8 @@ Meteor.startup(function () {
 
 
 function fetchTodaysReport() {
+	var ol_users = Meteor.users.find({ "status.online": true }).fetch();
+	if (!ol_users.length) return;
 	Keys.find().fetch().forEach(function (e) {
 		if (!e.key) return;
 		HTTP.call('GET', 'https://wakatime.com/api/v1/users/current/summaries',
