@@ -11,6 +11,7 @@
 			{{#each WakaUsers}}
 			<div class="col-md-2">
 				<div class="box">
+					<button type="button" class="close delete-user" id="{{_id._str}}" aria-label="Close"><span style="margin: 5px;" aria-hidden="true">&times;</span></button>
 					Name: {{owner}} <br>
 					{{#with GetWakaTime owner}}
 					Wakatime: {{data.grand_total.text}}

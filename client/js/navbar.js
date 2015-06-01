@@ -8,25 +8,19 @@ Template.navbar.events({
 		evt.preventDefault();
 		var apiK = $("#apiKey").val().trim(),
 		owner = $("#owner").val().trim();
-		Meteor.call("SaveApiKey", owner, apiK, function (err,res) {
+		Meteor.call("AddKey", owner, apiK, function (err,res) {
 			if (err) {
-				tmpl.addkeyres.set({ msg: err.reason, class: "danger"});
+				toastr.error(err.reason);
 			} else {
-				tmpl.addkeyres.set({ msg: "Success!", class: "success"});
 
 				$("#apiKey").val("");
 				$("#owner").val("");
+
+				toastr.success("Success!");
 			}
-			setTimeout(function () {
-				tmpl.addkeyres.set({ msg: "", class: ""});
-			}, 3000)
-		})
+		});
 	},
 });
 
 Template.navbar.helpers({
-	ResultMsg: function () {
-		if (Template.instance().addkeyres.get())
-			return Template.instance().addkeyres.get();
-	},
 })

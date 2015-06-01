@@ -38,11 +38,22 @@ Template.homepage.rendered = function () {
 			self.todayreports = Meteor.subscribe('todayreports');
 			self.todaySelected.set(true)
 		}
-	})
+	});
+
+	Meteor.call("FetchReportsToday", function (err, res) {
+		if (err) console.log(err.reason);
+	});
 }
 
 Template.homepage.events({
-
+	'click .delete-user': function (evt) {
+		var id = $(evt.target).parent().attr('id');
+		id = new Meteor.Collection.ObjectID(id);
+		Meteor.call("DeleteKey", id, function (err, res) {
+			if (err) toastr.error(err.reason);
+			else toastr.success("Deleted!");
+		});
+	}
 });
 
 Template.homepage.helpers({

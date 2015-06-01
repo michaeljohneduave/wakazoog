@@ -3,20 +3,32 @@ var day = 24 * 60 * 60 * 1000;
 Meteor.startup(function () {
 
 	Meteor.setInterval(function () {
-		fetchTodaysReport();
+		fetchReportToday();
 	}, 1000 * 60 * 15);
 
 	Meteor.setInterval(function () {
 		var now = new Date();
 		if (now.getHours() === 17) {
-			fetchDailyReport();
+			fetchReportYest();
 		}
 	}, 10000);
 
+	Keys.find().observe({
+		added: function (doc) {
+			console.log(doc);
+		}
+	})
+
 });
 
+Meteor.methods({
+	FetchReportsToday: function () {
+		fetchReportToday();
+	}
+})
 
-function fetchTodaysReport() {
+
+function fetchReportToday() {
 	var ol_users = Meteor.users.find({ "status.online": true }).fetch();
 	if (!ol_users.length) return;
 	Keys.find().fetch().forEach(function (e) {
@@ -40,7 +52,7 @@ function fetchTodaysReport() {
 	});
 }
 
-function fetchDailyReport() {
+function fetchReportYest() {
 	Keys.find().fetch().forEach(function (e) {
 		if (!e.key) return;
 		var yest = moment.tz("Asia/Manila").subtract(1, 'days').format("YYYY-MM-DD");

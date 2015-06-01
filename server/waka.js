@@ -1,10 +1,11 @@
 Meteor.methods({
-	"SaveApiKey": function (owner, apikey) {
+	AddKey: function (owner, apikey) {
 		if (!Meteor.userId()) return;
-		var keyDoc = Keys.find({ key: apikey }).fetch();
-		console.log(keyDoc);
-		if (keyDoc.length) {
-			throw new Meteor.Error('key_dup', 'Error: api kay already saved');
+		var keyDoc = Keys.findOne({ $or: [{key: apikey}, {owner: owner}] });
+		if (keyDoc && keyDoc.owner === owner) {
+			throw new Meteor.Error('key_dup', 'Error: name already taken');
+		} else if (keyDoc && keyDoc.apikey === apikey) {
+			throw new Meteor.Error('key_dup', 'Error: api key already taken');
 		}
 
 		Keys.insert({
@@ -13,9 +14,16 @@ Meteor.methods({
 			timestamp: new Date(),
 			owner: owner,
 			owner_email: null,
+			isActivated: true,
 			viewers: [],
 		}, cb);
 	},
+	DeleteKey: function (id) {
+		if (!Meteor.userId()) {
+			throw new Meteor.Error("NoAuth", "User not authorized to perform action");
+		}
+		Keys.update({ _id: id }, { $set: { isActivated: false } }, cb);
+	}
 });
 
 function cb(err, res) {
@@ -26,7 +34,7 @@ function cb(err, res) {
 
 
 Meteor.publish("wakausers", function () {
-	return Keys.find();
+	return Keys.find({ isActivated: true });
 });
 
 Meteor.publish("todayreports", function () {

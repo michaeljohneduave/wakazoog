@@ -1,8 +1,8 @@
 Accounts.onCreateUser(function (options, user) {
 	if (Meteor.users.find().count() < 1) {
-		user.isAdmin = true;
+		user.accessLevel = 'admin';
 	} else { 
-		user.isAdmin = false;
+		user.accessLevel = 'teamlead';
 	}
 	user.wakaApiKey = null;
 	return user;
